@@ -1,0 +1,34 @@
+<!-- optimization when you have time:
+when user submit and go back to the frontpage,
+all pre info should be auto selecte -->
+
+<h1>CIHI Employee Skill Analysis</h1>
+<form (ngSubmit)="onSubmit(userinfo)" #userinfo="ngForm">
+    <mat-form-field>
+      <mat-label>Please find your name</mat-label>
+      <mat-select  ngModel name="supervisor" (selectionChange)="onSelectSup($event)">
+        <mat-option *ngFor="let p of supervisors" [value]="p.eid">
+          {{ p.name }}
+        </mat-option>
+      </mat-select>   
+    </mat-form-field>
+    <br>
+    <mat-radio-group [(ngModel)]="usages" name="use" *ngIf="ifsupervisor" >
+      <mat-radio-button value="0">Enter a skill score for myself</mat-radio-button>
+      <br>
+      <mat-radio-button value="1">Enter a need score for my team members</mat-radio-button>
+    </mat-radio-group>
+    <br>
+    <mat-form-field *ngIf="ifseniorsupervisor && usages > 0">
+      <mat-label>Find your employee</mat-label>
+      <mat-select  ngModel name="supervisee">
+        <mat-option *ngFor="let e of supervisees" [value]="e.eid">
+          {{ e.name }}
+        </mat-option>
+      </mat-select>   
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" type="submit">Start</button>
+  </form>
+
+<pre>{{userinfo.value | json }}</pre>
