@@ -3,6 +3,7 @@ import { FormGroup, FormArray, FormControl, FormBuilder, NgForm } from '@angular
 import { SkillSurveyService } from './test.service';
 import { SliderService } from './slider.service';
 import { Router } from '@angular/router';
+import { HttpService } from '../http.service';
 
 @Component({
   selector: 'app-test',
@@ -20,6 +21,7 @@ export class TestComponent implements OnInit {
     private sss: SkillSurveyService,
     public sd: SliderService,
     private router: Router,
+    private htps: HttpService
     ) { }
 
   ngOnInit() {
@@ -36,7 +38,12 @@ export class TestComponent implements OnInit {
     const value = form.value;
     console.log(value);
     // console.log(this.userForm.value.type);
-    this.router.navigateByUrl('/userinfo');
+    this.htps.sendSurveydata(value).subscribe(
+      data => {
+        console.log(data);
+        this.router.navigateByUrl('/userinfo');
+      }
+    );
   }
 
   patch() {

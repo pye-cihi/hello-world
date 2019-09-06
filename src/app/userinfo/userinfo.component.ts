@@ -39,9 +39,16 @@ export class UserinfoComponent implements OnInit {
     const value = form.value;
     /// send this value to back end ...
     console.log(value);
+    let param1 = 0;
+    let param2 = 0;
+    let param3 = 0;
+    if (value['supervisor'] !== '') {param1 = value['supervisor']; }
+    if (value['use'] !== undefined) {param2 = value['use']; }
+    if (value['supervisee'] !== undefined) {param3 = value['supervisee']; }
+    const temp_value = '/' + param1 + '/' + param2 + '/' + param3;
 
     //  I am sending data to back end and getting data back     ---Start
-    this.htps.getSurveydata().subscribe(
+    this.htps.getSurveydata(temp_value).subscribe(
       data => {
         // Get the data from back end
         //  and pass it to a temp object, which can be utilized by the Survey component
