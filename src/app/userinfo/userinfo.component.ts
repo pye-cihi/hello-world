@@ -77,7 +77,7 @@ export class UserinfoComponent implements OnInit {
     } else {this.ifsupervisor = false; }
 
     if (this.supervisor.rid > 3) {
-      this.supervisees = this.supervisor.employee;
+      this.supervisees = this.supervisor.supervisee;
       this.ifseniorsupervisor = true;
     } else {this.ifseniorsupervisor = false; }
   }

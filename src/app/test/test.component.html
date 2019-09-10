@@ -7,8 +7,8 @@
         <mat-step *ngFor="let child of getControls(); let i = index">
           <ng-template matStepLabel>Step {{ i+1 }} {{child['controls'].catname.value}}</ng-template>
           <div [formGroupName]="i">
-            <div formArrayName="choice">
-              <div *ngFor="let son of child['controls'].choice['controls']; let j = index">
+            <div formArrayName="skill">
+              <div *ngFor="let son of child['controls'].skill['controls']; let j = index">
                 <div [formGroupName]="j">
                   {{son['controls'].skillname.value}}<br>
                   <!-- <input formControlName="score" #myInput (input)="mySlider.value = myInput.value"/> -->

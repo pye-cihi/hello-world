@@ -2,7 +2,7 @@ export interface People {
     eid: number;
     name: string;
     rid: number;
-    employee: People[] | null;
+    supervisee: People[] | null;
   }
 
 export class UserInfoService {

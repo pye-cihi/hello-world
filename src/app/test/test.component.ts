@@ -35,7 +35,7 @@ export class TestComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    const value = form.value;
+    const value = form.value['type']['options'];
     console.log(value);
     // console.log(this.userForm.value.type);
     this.htps.sendSurveydata(value).subscribe(
@@ -57,10 +57,10 @@ export class TestComponent implements OnInit {
     this.skillForm = this.fb.group({
       catname: [label],
       catid: [cid],
-      choice: this.fb.array([])
+      skill: this.fb.array([])
     });
 
-    const control = this.skillForm.get('choice') as FormArray;
+    const control = this.skillForm.get('skill') as FormArray;
     sarray.forEach(y => {
       control.push(this.patchskills(y.skillid, y.skillname, y.score));
     });
