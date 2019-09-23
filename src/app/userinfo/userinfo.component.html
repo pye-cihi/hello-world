@@ -2,11 +2,13 @@
 when user submit and go back to the frontpage,
 all pre info should be auto selecte -->
 
-<h1>CIHI Employee Skill Analysis</h1>
-<form (ngSubmit)="onSubmit(userinfo)" #userinfo="ngForm">
+<div *ngIf="isLoading">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+<form (ngSubmit)="onSubmit(userinfo)" #userinfo="ngForm" *ngIf="!isLoading">
     <mat-form-field>
       <mat-label>Please find your name</mat-label>
-      <mat-select  ngModel name="supervisor" (selectionChange)="onSelectSup($event)">
+      <mat-select  name="supervisor" (selectionChange)="onSelectSup($event)" [(ngModel)]="supervisordefault">
         <mat-option *ngFor="let p of supervisors" [value]="p.eid">
           {{ p.name }}
         </mat-option>
@@ -21,7 +23,7 @@ all pre info should be auto selecte -->
     <br>
     <mat-form-field *ngIf="ifseniorsupervisor && usages > 0">
       <mat-label>Find your employee</mat-label>
-      <mat-select  ngModel name="supervisee">
+      <mat-select name="supervisee" [(ngModel)]="superviseedefault">
         <mat-option *ngFor="let e of supervisees" [value]="e.eid">
           {{ e.name }}
         </mat-option>
@@ -31,4 +33,4 @@ all pre info should be auto selecte -->
     <button mat-raised-button color="primary" type="submit">Start</button>
   </form>
 
-<pre>{{userinfo.value | json }}</pre>
+<!-- <pre>{{userinfo.value | json }}</pre> -->

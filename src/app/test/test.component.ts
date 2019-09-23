@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, FormBuilder, NgForm } from '@angular/forms';
-import { SkillSurveyService } from './test.service';
+import { SkillSurveyService } from '../shared/test.service';
 import { SliderService } from './slider.service';
 import { Router } from '@angular/router';
 import { HttpService } from '../http.service';
@@ -11,6 +11,7 @@ import { HttpService } from '../http.service';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
+  isLoading = false;
   name: string;
   userForm: FormGroup;
   skillForm: FormGroup;
@@ -25,6 +26,7 @@ export class TestComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.fields = this.sss.categories;
     this.userForm = this.fb.group({
       type: this.fb.group({
@@ -32,9 +34,11 @@ export class TestComponent implements OnInit {
       })
     });
     this.patch();
+    this.isLoading = false;
   }
 
   onSubmit(form: NgForm) {
+    this.isLoading = true;
     const value = form.value['type']['options'];
     console.log(value);
     // console.log(this.userForm.value.type);
@@ -42,6 +46,7 @@ export class TestComponent implements OnInit {
       data => {
         console.log(data);
         this.router.navigateByUrl('/userinfo');
+        this.isLoading = false;
       }
     );
   }
@@ -62,21 +67,26 @@ export class TestComponent implements OnInit {
 
     const control = this.skillForm.get('skill') as FormArray;
     sarray.forEach(y => {
-      control.push(this.patchskills(y.skillid, y.skillname, y.score));
+      control.push(this.patchskills(y.skillid, y.skillname, y.score, y.desc));
     });
 
     return this.skillForm;
   }
 
-  patchskills(sid, sname, sc) {
+  patchskills(sid, sname, sc, desc) {
     return this.fb.group({
       skillid: [sid],
       skillname: [sname],
-      score: [sc]
+      score: [sc],
+      desc: [desc]
     });
   }
 
   getControls() {
     return (this.userForm.get('type.options') as FormArray).controls;
+  }
+
+  onCancel() {
+    this.router.navigateByUrl('/userinfo');
   }
 }

@@ -7,7 +7,8 @@ import {
     MatButtonModule,
     MatSliderModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTooltipModule 
 } from '@angular/material';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +26,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSliderModule,
     MatSelectModule,
     MatRadioModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule {}

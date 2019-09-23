@@ -1,26 +1,24 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit(survey)" #survey="ngForm">
+<div style="text-align:right">
+  <button mat-raised-button color="primary" (click)="onCancel()">Cancel and Go Back</button>
+</div>
+
+<div *ngIf="isLoading">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit(survey)" #survey="ngForm" *ngIf="!isLoading">
     <hr>
     <div formGroupName="type">
-      <mat-vertical-stepper formArrayName="options">
-        <mat-step *ngFor="let child of getControls(); let i = index">
-          <ng-template matStepLabel>Step {{ i+1 }} {{child['controls'].catname.value}}</ng-template>
+      <mat-vertical-stepper formArrayName="options" appMatVerticalStepperScroller>
+        <mat-step *ngFor="let child of getControls(); let i = index" >
+          <ng-template matStepLabel>{{child['controls'].catname.value}}</ng-template>
           <div [formGroupName]="i">
             <div formArrayName="skill">
               <div *ngFor="let son of child['controls'].skill['controls']; let j = index">
-                <div [formGroupName]="j">
+                <div class="skillstyle" [formGroupName]="j" [matTooltip]="son['controls'].desc.value" matTooltipPosition="right">
                   {{son['controls'].skillname.value}}<br>
-                  <!-- <input formControlName="score" #myInput (input)="mySlider.value = myInput.value"/> -->
-                  <!-- <mat-slider
-                  [tickInterval]="sd.tickInterval"
-                  [max]="sd.max"
-                  [min]="sd.min"
-                  [thumbLabel]="sd.thumbLabel"
-                  formControlName="score"
-                  #mySlider 
-                  (input)="myInput.value = mySlider.value"
-                  ></mat-slider> -->
                   <mat-slider
                   [tickInterval]="sd.tickInterval"
                   [max]="sd.max"
@@ -33,9 +31,11 @@
               </div>
             </div>
           </div>
+          <!-- Enable or Disable the "next" and "back" buttons -->
           <div>
-            <button type="button" mat-button matStepperPrevious *ngIf="i!=0">Back</button>
-            <button type="button" mat-button matStepperNext *ngIf="i!=getControls().length-1">Next</button>
+            <button mat-flat-button color="primary" type="button" mat-button matStepperPrevious *ngIf="i!=0">Back</button>
+            {{" "}}
+            <button mat-flat-button color="primary" type="button" mat-button matStepperNext *ngIf="i!=getControls().length-1">Next</button>
           </div>
         </mat-step>
       </mat-vertical-stepper>
@@ -43,4 +43,4 @@
     <button class="btn btn-success" type="submit">Submit</button>
   </form>
   <br>
-  <pre>{{userForm.value | json }}</pre>
+  <!-- <pre>{{userForm.value | json }}</pre> -->
